@@ -1,8 +1,8 @@
 package app
 
 import (
-	"../domain"
-	"../infrastructure"
+	"PhoneNumberFormater/domain"
+	"PhoneNumberFormater/infrastructure"
 )
 
 type Service struct {
