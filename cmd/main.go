@@ -1,7 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"../app"
+)
 
 func main() {
-	fmt.Println("Hello GO!")
+	service := app.MakeService()
+	service.Run("G:\\DevEducation\\GoLang\\PhoneNumberFormater\\phones.txt")
 }
