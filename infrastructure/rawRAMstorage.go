@@ -6,11 +6,14 @@ import (
 	"os"
 )
 
+const sourceFilePath = "G:\\DevEducation\\GoLang\\PhoneNumberFormater\\phones.txt"
+
 type RawRAMstorage struct {
 	PhoneNumbers []string
 }
 
-func (r *RawRAMstorage) GetNumbersFromFile(path string) {
+func (r *RawRAMstorage) getNumbersFromFile(path string) {
+	r.PhoneNumbers = []string{}
 	file, err := os.Open(path)
 	if err != nil {
 		log.Println("Failed to open file")
@@ -23,12 +26,11 @@ func (r *RawRAMstorage) GetNumbersFromFile(path string) {
 	file.Close()
 }
 
-func (r *RawRAMstorage) GetAllNumbers() []string {
+func (r *RawRAMstorage) GetAllRawNumbers() []string {
+	r.getNumbersFromFile(sourceFilePath)
 	return r.PhoneNumbers
 }
 
 func NewRawRAMstorage() *RawRAMstorage {
-	r := &RawRAMstorage{}
-	r.PhoneNumbers = []string{}
-	return r
+	return &RawRAMstorage{}
 }

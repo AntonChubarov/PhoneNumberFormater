@@ -20,9 +20,9 @@ func TestValidate1(t *testing.T) {
 
 	for i, item := range cases {
 		valid := validator.Validate(item.Number)
-		if item.IsValid == valid {
-			t.Errorf("[%d] Expected result: %v", i, valid)
-		}
+		//if item.IsValid == valid {
+		//	t.Errorf("[%d] Expected result: %v", i, valid)
+		//}
 		if item.IsValid != valid {
 			t.Errorf("[%d] Unexpected result: %v", i, valid)
 		}

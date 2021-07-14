@@ -1,20 +1,19 @@
 package domain
 
 type RawStorage interface {
-	GetNumbersFromFile(path string)
-	GetAllNumbers() []string
+	GetAllRawNumbers() []string
 }
 
 type ValidStorage interface {
 	AddValidNumber(validNumber ...string)
-	GetAllNumbers() []string
+	GetAllValidNumbers() []string
 }
 
 type Validator interface {
 	Validate(number string) (isValid bool)
 }
 
-type Formater interface {
+type Formatter interface {
 	TryToFix(number string) (validNumber string)
 	AddCountryCode(validNumber string) (formatedNumber string)
 }

@@ -16,7 +16,9 @@ func (u *UkraineFormater) TryToFix(number string) (validNumber string) {
 	for _, symbol := range symbolsToRemove {
 		validNumber = strings.ReplaceAll(validNumber, string(symbol), "")
 	}
-	validNumber = validNumber[len(validNumber)-10:]
+	if len(validNumber) > 10 {
+		validNumber = validNumber[len(validNumber)-10:]
+	}
 	return
 }
 

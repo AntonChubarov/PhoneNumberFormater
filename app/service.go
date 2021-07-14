@@ -2,41 +2,47 @@ package app
 
 import (
 	"PhoneNumberFormater/domain"
-	"PhoneNumberFormater/infrastructure"
+	"log"
 )
 
 type Service struct {
-	domain.RawStorage
-	domain.ValidStorage
-	domain.Validator
-	domain.Formater
-	domain.Visualizer
+	rawStorage domain.RawStorage
+	validStorage domain.ValidStorage
+	validator domain.Validator
+	formatter domain.Formatter
+	visualizer domain.Visualizer
 }
 
-func MakeService() *Service {
-	s := &Service{}
-	s.RawStorage = infrastructure.NewRawRAMstorage()
-	s.ValidStorage = infrastructure.NewValidRAMstorage()
-	s.Validator = infrastructure.NewRegExValidator()
-	s.Formater = infrastructure.NewUkraineFormater()
-	s.Visualizer = infrastructure.NewVonsoleVisualizer()
-	return s
+func NewService(RawStorage domain.RawStorage,
+	ValidStorage domain.ValidStorage,
+	Validator domain.Validator,
+	Formatter domain.Formatter,
+	Visualizer domain.Visualizer) *Service {
+	return &Service{
+		RawStorage,
+		ValidStorage,
+		Validator,
+		Formatter,
+		Visualizer,
+	}
 }
 
-func (s *Service) Run(path string) {
+func (s *Service) Run() {
 	var temp string
-	s.RawStorage.GetNumbersFromFile(path)
-	s.Visualizer.Visualize(s.RawStorage.GetAllNumbers())
-	for _, number := range s.RawStorage.GetAllNumbers() {
-		temp = number
-		if !s.Validator.Validate(number) {
-			temp = s.Formater.TryToFix(number)
+	rawNumbers := s.rawStorage.GetAllRawNumbers()
+	s.visualizer.Visualize(rawNumbers)
+	for i := range rawNumbers {
+		temp = rawNumbers[i]
+		if !s.validator.Validate(rawNumbers[i]) {
+			temp = s.formatter.TryToFix(rawNumbers[i])
 		}
-		if s.Validator.Validate(temp) {
-			temp = s.Formater.AddCountryCode(temp)
-			s.ValidStorage.AddValidNumber(temp)
+		if s.validator.Validate(temp) {
+			temp = s.formatter.AddCountryCode(temp)
+			s.validStorage.AddValidNumber(temp)
+		} else {
+			log.Printf("Can't to format number %v, please, check it!\n", rawNumbers[i])
 		}
 	}
-	s.Visualizer.Visualize(s.ValidStorage.GetAllNumbers())
+	s.visualizer.Visualize(s.validStorage.GetAllValidNumbers())
 }
 

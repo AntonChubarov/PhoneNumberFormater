@@ -23,7 +23,7 @@ func (v *ValidRAMstorage) contains(element string) bool {
 	return false
 }
 
-func (v *ValidRAMstorage) GetAllNumbers() []string {
+func (v *ValidRAMstorage) GetAllValidNumbers() []string {
 	return v.validNumbers
 }
 
