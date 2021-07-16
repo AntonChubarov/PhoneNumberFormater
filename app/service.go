@@ -29,6 +29,7 @@ func NewService(RawStorage domain.RawStorage,
 
 func (s *Service) Run() {
 	var temp string
+	var err error
 	rawNumbers := s.rawStorage.GetAllRawNumbers()
 	s.visualizer.Visualize(rawNumbers)
 	for i := range rawNumbers {
@@ -37,7 +38,10 @@ func (s *Service) Run() {
 			temp = s.formatter.TryToFix(rawNumbers[i])
 		}
 		if s.validator.Validate(temp) {
-			temp = s.formatter.AddCountryCode(temp)
+			temp, err = s.formatter.AddCountryCode(temp)
+			if err != nil {
+				log.Println(err)
+			}
 			s.validStorage.AddValidNumber(temp)
 		} else {
 			log.Printf("Can't to format number %v, please, check it!\n", rawNumbers[i])

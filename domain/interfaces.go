@@ -15,7 +15,7 @@ type Validator interface {
 
 type Formatter interface {
 	TryToFix(number string) (validNumber string)
-	AddCountryCode(validNumber string) (formatedNumber string)
+	AddCountryCode(validNumber string) (formatedNumber string, err error)
 }
 
 type Visualizer interface {

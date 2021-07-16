@@ -1,6 +1,9 @@
 package infrastructure
 
-import "strings"
+import (
+	"errors"
+	"strings"
+)
 
 const (
 	ukraineCode = "+38"
@@ -10,6 +13,9 @@ const (
 type UkraineFormater struct {
 
 }
+
+var ErrNumberToShort = errors.New("Valid number should contain 10 digits")
+var ErrNumberToLong = errors.New("Valid number should contain 10 digits")
 
 func (u *UkraineFormater) TryToFix(number string) (validNumber string) {
 	validNumber = number
@@ -22,7 +28,15 @@ func (u *UkraineFormater) TryToFix(number string) (validNumber string) {
 	return
 }
 
-func (u *UkraineFormater) AddCountryCode(validNumber string) (formatedNumber string) {
+func (u *UkraineFormater) AddCountryCode(validNumber string) (formatedNumber string, err error) {
+	if len(validNumber) < 10 {
+		return "", ErrNumberToShort
+	}
+
+	if len(validNumber) > 10 {
+		return "", ErrNumberToLong
+	}
+
 	formatedNumber = ukraineCode + validNumber
 	return
 }
