@@ -1,5 +1,7 @@
 package domain
 
+//go:generate mockgen -source=interfaces.go -destination=mocks.go -package=domain
+
 type RawStorage interface {
 	GetAllRawNumbers() []string
 }
