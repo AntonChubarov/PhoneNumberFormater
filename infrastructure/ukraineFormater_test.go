@@ -29,7 +29,6 @@ func TestTryToFix(t *testing.T) {
 			t.Errorf("[%d] Unexpected result: %v, but should be %v", i, fixedNumber, cases[i].FixedNumber)
 		}
 	}
-
 }
 
 func TestAddCountryCodeAssert(t *testing.T) {

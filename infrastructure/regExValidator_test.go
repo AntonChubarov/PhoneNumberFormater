@@ -27,7 +27,6 @@ func TestValidate(t *testing.T) {
 			t.Errorf("[%d] Unexpected result: %v", i, valid)
 		}
 	}
-
 }
 
 func TestValidateAssert(t *testing.T) {

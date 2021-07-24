@@ -13,17 +13,17 @@ type Service struct {
 	visualizer domain.Visualizer
 }
 
-func NewService(RawStorage domain.RawStorage,
-	ValidStorage domain.ValidStorage,
-	Validator domain.Validator,
-	Formatter domain.Formatter,
-	Visualizer domain.Visualizer) *Service {
+func NewService(rawStorage domain.RawStorage,
+	validStorage domain.ValidStorage,
+	validator domain.Validator,
+	formatter domain.Formatter,
+	visualizer domain.Visualizer) *Service {
 	return &Service{
-		RawStorage,
-		ValidStorage,
-		Validator,
-		Formatter,
-		Visualizer,
+		rawStorage,
+		validStorage,
+		validator,
+		formatter,
+		visualizer,
 	}
 }
 

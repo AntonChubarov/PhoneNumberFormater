@@ -5,15 +5,14 @@ import (
 	"testing"
 )
 
-var singleValidNumber = "0502030450"
-var validNumbers = []string{
-	"+380633562669",
-	"+380982222222",
-	"+380632564446",
-	"+380632564446",
-}
-
 func TestAddNumbersToValidStorage(t *testing.T) {
+	var validNumbers = []string{
+		"+380633562669",
+		"+380982222222",
+		"+380632564446",
+		"+380632564446",
+	}
+
 	validStorage := NewValidRAMstorage()
 
 	var numbers []string
@@ -28,6 +27,8 @@ func TestAddNumbersToValidStorage(t *testing.T) {
 }
 
 func TestSeveralAddsOfNumberToValidStorage(t *testing.T) {
+	var singleValidNumber = "0502030450"
+
 	validStorage := NewValidRAMstorage()
 
 	var numbers []string

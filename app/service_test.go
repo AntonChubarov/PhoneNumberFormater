@@ -7,9 +7,14 @@ import (
 	"testing"
 )
 
-//rawNumber := "8-050-203-04-50"
-//validNumber := "0502030450"
-//formattedNumber := "+380502030450"
+type Case struct {
+	desc string
+	rawStorage domain.RawStorage
+	validStorage domain.ValidStorage
+	validator domain.Validator
+	formatter domain.Formatter
+	visualizer domain.Visualizer
+}
 
 func TestService(t *testing.T)  {
 	ctrl := gomock.NewController(t)
@@ -18,14 +23,7 @@ func TestService(t *testing.T)  {
 	validNumber := "0502030450"
 	formattedNumber := "+380502030450"
 
-	cases := []struct {
-		desc string
-		rawStorage domain.RawStorage
-		validStorage domain.ValidStorage
-		validator domain.Validator
-		formatter domain.Formatter
-		visualizer domain.Visualizer
-	} {
+	cases := []Case {
 		{
 			desc:"Function GetAllRawNumbers() of RawStorage should be called once when service Run() executing",
 			rawStorage: func(ctrl *gomock.Controller) *domain.MockRawStorage {
@@ -71,7 +69,8 @@ func TestService(t *testing.T)  {
 			visualizer: infrastructure.NewConsoleVisualizer(),
 		},
 		{
-			desc:"Function TryToFix() and AddCountryCode() of Formatter should be once when GetAllRawNumbers() of RawStorage returns one invalid number",
+			desc:`Function TryToFix() and AddCountryCode() of Formatter should be once
+when GetAllRawNumbers() of RawStorage returns one invalid number`,
 			rawStorage: func(ctrl *gomock.Controller) *domain.MockRawStorage {
 				mock:=domain.NewMockRawStorage(ctrl)
 				mock.EXPECT().GetAllRawNumbers().Return([]string{rawNumber})
@@ -88,7 +87,8 @@ func TestService(t *testing.T)  {
 			visualizer: infrastructure.NewConsoleVisualizer(),
 		},
 		{
-			desc:"Function AddValidNumber() and GetAllValidNumbers() of ValidStorage should be called once when GetAllRawNumbers() of RawStorage returns one number",
+			desc:`Function AddValidNumber() and GetAllValidNumbers() of ValidStorage
+should be called once when GetAllRawNumbers() of RawStorage returns one number`,
 			rawStorage: func(ctrl *gomock.Controller) *domain.MockRawStorage {
 				mock:=domain.NewMockRawStorage(ctrl)
 				mock.EXPECT().GetAllRawNumbers().Return([]string{rawNumber})
@@ -106,15 +106,10 @@ func TestService(t *testing.T)  {
 		},
 	}
 
-	for _, c := range cases {
-		t.Run(c.desc, func(t *testing.T) {
-			service := NewService(
-				c.rawStorage,
-				c.validStorage,
-				c.validator,
-				c.formatter,
-				c.visualizer,
-				)
+	for i := range cases {
+		t.Run(cases[i].desc, func(t *testing.T) {
+			service := NewService(cases[i].rawStorage, cases[i].validStorage, cases[i].validator,
+				cases[i].formatter,	cases[i].visualizer)
 			service.Run()
 		})
 	}

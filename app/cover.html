@@ -84,17 +84,17 @@ type Service struct {
         visualizer domain.Visualizer
 }
 
-func NewService(RawStorage domain.RawStorage,
-        ValidStorage domain.ValidStorage,
-        Validator domain.Validator,
-        Formatter domain.Formatter,
-        Visualizer domain.Visualizer) *Service <span class="cov8" title="1">{
+func NewService(rawStorage domain.RawStorage,
+        validStorage domain.ValidStorage,
+        validator domain.Validator,
+        formatter domain.Formatter,
+        visualizer domain.Visualizer) *Service <span class="cov8" title="1">{
         return &amp;Service{
-                RawStorage,
-                ValidStorage,
-                Validator,
-                Formatter,
-                Visualizer,
+                rawStorage,
+                validStorage,
+                validator,
+                formatter,
+                visualizer,
         }
 }</span>
 

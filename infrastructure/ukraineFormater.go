@@ -14,8 +14,8 @@ type UkraineFormater struct {
 
 }
 
-var ErrNumberToShort = errors.New("Valid number should contain 10 digits")
-var ErrNumberToLong = errors.New("Valid number should contain 10 digits")
+var ErrNumberToShort = errors.New("valid number should contain 10 digits")
+var ErrNumberToLong = errors.New("valid number should contain 10 digits")
 
 func (u *UkraineFormater) TryToFix(number string) (validNumber string) {
 	validNumber = number
