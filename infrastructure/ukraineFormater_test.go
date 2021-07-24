@@ -38,7 +38,6 @@ func TestAddCountryCodeAssert(t *testing.T) {
 		{"0982222222", "0982222222", "+380982222222", nil},
 		{"+38(063) 256-44-46", "0632564446", "+380632564446", nil},
 		{" +38-063-256-44-46", "0632564446", "+380632564446", nil},
-		{"22-60", "2260", "", ErrNumberToShort},
 	}
 
 	formatter := NewUkraineFormater()
@@ -53,3 +52,19 @@ func TestAddCountryCodeAssert(t *testing.T) {
 	}
 }
 
+func TestAddCountryCodeErrors(t *testing.T) {
+	cases := []FormatterTestCase{
+		{"", "2260", "", ErrNumberToShort},
+		{"", "063555444332", "", ErrNumberToLong},
+	}
+	formatter := NewUkraineFormater()
+
+	var formattedNumber string
+	var err error
+
+	for i := range cases {
+		formattedNumber, err = formatter.AddCountryCode(cases[i].FixedNumber)
+		assert.Equal(t, cases[i].FormatedNumber, formattedNumber)
+		assert.Equal(t, cases[i].Error, err)
+	}
+}
